@@ -28,39 +28,38 @@
 		</div>
 		<script>
 			const getResponse = () => {
-				const baseUrl = 'http://localhost:3000';
-				const input = document.getElementById('numbers').value;
+				const baseUrl = 'http://localhost:3000'
+				const input = document.getElementById('numbers').value
 				let url, computeSum
 				if (input.indexOf(',') > -1) {
-					computeSum = true;
-					url = baseUrl + '/sumandprimality/' + input;
+					computeSum = true
+					url = baseUrl + '/sumandprimality/' + input
 				} else {
-					computeSum = false;
-					url = baseUrl + '/primality/' + input;
+					computeSum = false
+					url = baseUrl + '/primality/' + input
 				}
-				const xhr = new XMLHttpRequest();
-				xhr.open('GET', url);
+				const xhr = new XMLHttpRequest()
+				xhr.open('GET', url)
 				xhr.onload = function() {
 					const resp = JSON.parse(xhr.responseText)
 					if (resp['error']) {
-						document.getElementById('error').style.display = 'block';
-						document.getElementById('result').style.display = 'none';
+						document.getElementById('error').style.display = 'block'
+						document.getElementById('result').style.display = 'none'
 					} else {
 						if (computeSum) {
-							document.getElementById('sum').innerHTML = resp['sum'];
-							document.getElementById('sumresult').style.display = 'inline';
+							document.getElementById('sum').innerHTML = resp['sum']
+							document.getElementById('sumresult').style.display = 'inline'
 						} else {
-							document.getElementById('sumresult').style.display = 'none';
+							document.getElementById('sumresult').style.display = 'none'
 						}
-						document.getElementById('negation').innerHTML = resp['isPrime'] ? '' : 'not';
-						document.getElementById('result').style.display = 'block';
-						document.getElementById('error').style.display = 'none';
+						document.getElementById('negation').innerHTML = resp['isPrime'] ? '' : 'not'
+						document.getElementById('result').style.display = 'block'
+						document.getElementById('error').style.display = 'none'
 					}
 				}
 				xhr.send()
 			} 
-
-			document.getElementById('submitbutton').addEventListener('click', getResponse);	
+			document.getElementById('submitbutton').addEventListener('click', getResponse)	
 		</script>
 	</body>
 </html>

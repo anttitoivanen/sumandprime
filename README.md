@@ -9,5 +9,5 @@ This is a simple app for summing an arbitrary number of positive integers and ch
 ## Installation and running
 1. Clone this repository and navigate into it
 2. `npm install`
-3. `node index.js`
+3. `npm start`
 4. Open http://localhost:3000 in you browser
