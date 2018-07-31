@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Simple summing</title>
+	</head>
+	<body>
+		<style>
+			.intro {
+				font-weight: bold
+			}
+			#result {
+				display: none
+			}
+			#error {
+				display: none
+			}
+		</style>
+		<div class="intro">Please insert one or more comma-separated positive integers</div>
+		<form id="inputForm">
+			<input type="text" name="numbers" id="numbers">
+			<input type="button" value="Submit" id="submitbutton">
+		</form>
+		<div id="error">
+			One or more pieces of the inserted data is not a positive integer. Please check your input.
+		</div>
+		<div id="result">
+			<span id="sumresult">The sum of the given numbers is <span id="sum"></span>.</span> This number is <span id="negation"></span> a prime.
+		</div>
+		<script>
+			const getResponse = () => {
+				const baseUrl = 'http://localhost:3000';
+				const input = document.getElementById('numbers').value;
+				const computeSum = input.indexOf(',') > -1 
+				const xhr = new XMLHttpRequest();
+				xhr.open('GET', baseUrl + '/sumandprimality/' + input);
+				xhr.onload = function() {
+					const resp = JSON.parse(xhr.responseText)
+					if (resp['error']) {
+						document.getElementById('error').style.display = 'block';
+						document.getElementById('resultarea').style.display = 'none';
+					} else {
+						document.getElementById('sum').innerHTML = resp['sum'];
+						document.getElementById('negation').innerHTML = resp['isPrime'] ? '' : 'not';
+						document.getElementById('result').style.display = 'block';
+						document.getElementById('error').style.display = 'none';
+					}
+				}
+				xhr.send()
+			} 
+
+			document.getElementById('submitbutton').addEventListener('click', getResponse);	
+		</script>
+	</body>
+</html>
