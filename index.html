@@ -30,16 +30,28 @@
 			const getResponse = () => {
 				const baseUrl = 'http://localhost:3000';
 				const input = document.getElementById('numbers').value;
-				const computeSum = input.indexOf(',') > -1 
+				let url, computeSum
+				if (input.indexOf(',') > -1) {
+					computeSum = true;
+					url = baseUrl + '/sumandprimality/' + input;
+				} else {
+					computeSum = false;
+					url = baseUrl + '/primality/' + input;
+				}
 				const xhr = new XMLHttpRequest();
-				xhr.open('GET', baseUrl + '/sumandprimality/' + input);
+				xhr.open('GET', url);
 				xhr.onload = function() {
 					const resp = JSON.parse(xhr.responseText)
 					if (resp['error']) {
 						document.getElementById('error').style.display = 'block';
-						document.getElementById('resultarea').style.display = 'none';
+						document.getElementById('result').style.display = 'none';
 					} else {
-						document.getElementById('sum').innerHTML = resp['sum'];
+						if (computeSum) {
+							document.getElementById('sum').innerHTML = resp['sum'];
+							document.getElementById('sumresult').style.display = 'inline';
+						} else {
+							document.getElementById('sumresult').style.display = 'none';
+						}
 						document.getElementById('negation').innerHTML = resp['isPrime'] ? '' : 'not';
 						document.getElementById('result').style.display = 'block';
 						document.getElementById('error').style.display = 'none';
